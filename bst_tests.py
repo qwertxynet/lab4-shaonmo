@@ -1,4 +1,3 @@
-
 import sys
 import unittest
 from typing import *
@@ -104,9 +103,13 @@ class BSTTests(unittest.TestCase):
         self.assertTrue(lookup(bst, Point2(1,1)))   # r^2 = 2
         self.assertFalse(lookup(bst, Point2(3,0)))  # r^2 = 9 not present
 
-        # delete one of the distance-1 points
+        # delete one of the distance-1 points (equivalence class remains present)
         bst = delete(bst, Point2(1,0))
-        self.assertFalse(lookup(bst, Point2(1,0))) or self.assertTrue(lookup(bst, Point2(0,1)))
+        self.assertTrue(lookup(bst, Point2(1,0)))   # (0,1) still present keeps the class present
+
+        # delete again; now the equivalence class should be absent
+        bst = delete(bst, Point2(1,0))
+        self.assertFalse(lookup(bst, Point2(1,0)))
 
     def test_height_utility(self):
         bst = BinarySearchTree(None, num_comes_before)
@@ -118,6 +121,5 @@ class BSTTests(unittest.TestCase):
         self.assertEqual(height(bst.tree), 1)
 
 
-if (__name__ == '__main__'):
+if __name__ == '__main__':
     unittest.main()
-
