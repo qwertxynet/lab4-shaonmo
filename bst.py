@@ -24,6 +24,7 @@ class BinarySearchTree:
 
 
 def is_empty(BST: BinarySearchTree) -> bool:
+    # Purpose : Check if the BST is empty
     match BST.tree:
         case None:
             return True
@@ -32,6 +33,7 @@ def is_empty(BST: BinarySearchTree) -> bool:
 
 
 def _insert_helper(tree: BinTree, val: Any, comes_before: Callable[[Any, Any], bool]) -> BinTree:
+    # Purpose : Helper for insertion into a BST following the ordering property
     match tree:
         case None:
             return Node(val, None, None)
@@ -44,15 +46,18 @@ def _insert_helper(tree: BinTree, val: Any, comes_before: Callable[[Any, Any], b
 
 
 def insert(BST: BinarySearchTree, val: Any) -> BinarySearchTree:
+    # Purpose : Insert into a BST following the ordering property
     return BinarySearchTree(_insert_helper(BST.tree, val, BST.comes_before), BST.comes_before)
 
 
 def _equal(a: Any, b: Any, comes_before: Callable[[Any, Any], bool]) -> bool:
+    # Purpose : Check if two values are equal according to the BST's ordering property
     # a == b if neither comes before the other
     return (not comes_before(a, b)) and (not comes_before(b, a))
 
 
 def _lookup_helper(tree: BinTree, val: Any, comes_before: Callable[[Any, Any], bool]) -> bool:
+    # Purpose : Helper for lookup in a BST following the ordering property
     match tree:
         case None:
             return False
@@ -66,10 +71,12 @@ def _lookup_helper(tree: BinTree, val: Any, comes_before: Callable[[Any, Any], b
 
 
 def lookup(BST: BinarySearchTree, val: Any) -> bool:
+    # Purpose : Lookup in a BST following the ordering property
     return _lookup_helper(BST.tree, val, BST.comes_before)
 
 
 def _min_value(tree: BinTree) -> Any:
+    # Purpose: Find the minimum value in a non-empty BST
     # Precondition: tree is not None
     match tree:
         case None:
@@ -81,6 +88,7 @@ def _min_value(tree: BinTree) -> Any:
 
 
 def _delete_helper(tree: BinTree, val: Any, comes_before: Callable[[Any, Any], bool]) -> BinTree:
+    # Purpose : Helper for deletion from a BST following the ordering property
     match tree:
         case None:
             return None
@@ -110,7 +118,7 @@ def delete(BST: BinarySearchTree, val: Any) -> BinarySearchTree:
     return BinarySearchTree(_delete_helper(BST.tree, val, BST.comes_before), BST.comes_before)
 
 def height(tree: BinTree) -> int:
- # Purpose: Height defined as number of edges on the longest path from this node to a leaf.
+ # Purpose: Return height (number of edges on the longest path from this node to a leaf)
     match tree:
         case None:
             return -1
